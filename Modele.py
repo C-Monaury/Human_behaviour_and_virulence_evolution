@@ -218,8 +218,15 @@ ax1.set_ylabel('Virulence', color='purple')
 
 
 if plot2 == "Yes":
-    st.pyplot(fig1)
-    st.pyplot(fignocoop)
+    row1 =st.columns(1)
+    row2 =st.columns(1)
+    with row1:
+        st.header("model coupling behavior and evolution")
+        st.pyplot(fig1)
+
+    with row2:
+        st.header("model with only evolution ")
+        st.pyplot(fignocoop)
 
 
 
