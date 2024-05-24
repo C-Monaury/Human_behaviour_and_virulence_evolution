@@ -230,10 +230,10 @@ if plot2 == "Yes":
 
 ############################## PLOT 
 
-plot3 = st.selectbox("Display graphic ? :chart_with_upwards_trend:",("Yes","No"))
+plot3 = st.selectbox("Display virulence evolution ? :chart_with_upwards_trend:",("Yes","No"))
 
 
-st.subheader("Evolution des virulences")
+st.subheader("Virulence evolution")
 
 
 temps = np.linspace(0,tmax,nbr_pas)
