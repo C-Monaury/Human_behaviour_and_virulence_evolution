@@ -218,8 +218,8 @@ ax1.set_ylabel('Virulence', color='purple')
 
 
 if plot2 == "Yes":
-    row1 =st.columns(1)
-    row2 =st.columns(1)
+    row1, row2  =st.columns(2)
+   
     with row1:
         st.header("model coupling behavior and evolution")
         st.pyplot(fig1)
