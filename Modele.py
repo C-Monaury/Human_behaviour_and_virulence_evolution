@@ -9,15 +9,17 @@ import streamlit as st
 from mpl_toolkits.mplot3d import Axes3D
 
 
-st.title("Système SIS avec dynamique d'imitation et un trade off clairance-transmission")
-
-st.header("Présentation du système")
+st.title("Comment les comportements humain influencent-ils l’évolution de la virulence ?")
+st.write("Ce modèle a été réalisé au cours d'un stage de M2 par Clément MONAURY et encadré par Frédéric Hamelin")
+st.header("Présentation du système:")
 
 st.latex(r'''
     \left  \{
     \begin{array}{r c l}
-        \frac{di}{d \tau}   & = &  b(\gamma) (1 - i)  i - \gamma i - 1 \\
-        \frac{d \gamma}{d \tau}   & = & a  \gamma [b^{'}(\gamma)  (1 - i + \Sigma i) - 1 ] \\
+        \frac{\d s}{\d \tau}  & =  1 - (1 -x)b(\upsilon) s  i -  s \,,\\
+        \frac{ \d i}{\d \tau}   & =  (1 -x)b(\upsilon) s i   - (\upsilon +1 ) i \,,\\
+        \frac{\d \upsilon}{\d \tau} &=  a \upsilon [(1 -x) b^{'}(\upsilon)(s + \sigma i) - 1] \,,\\
+        \frac{\d x}{\d  \tau}   & =  a x (1 -x) (i - \kappa) \,.
    \end{array}
    \right.
              ''' 
@@ -57,7 +59,9 @@ nbr_pas = int(tmax/pas)
 
 ###########################################Choix du trade offs
 
-   
+plot1 = st.selectbox("Display trade-off graphic ? :chart_with_upwards_trend:",("Yes","No"))
+
+
 
 trade_choix = st.selectbox("Choix du trade-off",["cx^k","(x*c)/(k+x)"])
 if trade_choix == "cx^k":
@@ -101,8 +105,8 @@ if trade_choix == "(x*c)/(k+x)":
     ax1.set_xlabel('Clairance')
     ax1.set_ylabel('Transmission')
 
-
-st.pyplot(figtrade)
+if plot1=="Yes":
+    st.pyplot(figtrade)
 
 
 ################################################# Coeur du modèle
@@ -167,6 +171,9 @@ with col23:
 
 ###########################PLOT2D
 st.subheader("Dynamiques des 3 compartiments en fonction du temps")
+
+plot2 = st.selectbox("Display graphic ? :chart_with_upwards_trend:",("Yes","No"))
+
 # sol = solve_ivp(model, y0 = [i0 , c0,x0], t_span = (0,tmax),args = (sig,rho0,rho1,pay,c,k,A,N),method="RK45",dense_output=True)
 # sol = sol.y
 
@@ -193,7 +200,7 @@ ax1.set_xlabel('Temps')
 ax1.set_ylabel('Prévalence', color='red')
 ax2.set_ylabel('Coopérateurs', color='black')
 
-st.pyplot(fig1)
+
 
 
 
@@ -209,7 +216,12 @@ ax1.set_xlabel('Temps')
 ax1.set_ylabel('Prévalence', color='red')
 ax1.set_ylabel('Virulence', color='purple')
 
-st.pyplot(fignocoop)
+
+if plot2 == "Yes":
+    st.pyplot(fig1)
+    st.pyplot(fignocoop)
+
+
 
 
 
@@ -218,6 +230,7 @@ st.pyplot(fignocoop)
 
 ############################## PLOT 
 
+plot3 = st.selectbox("Display graphic ? :chart_with_upwards_trend:",("Yes","No"))
 
 
 st.subheader("Evolution des virulences")
@@ -249,4 +262,5 @@ ax1.set_xlabel('Temps')
 ax1.set_ylabel('Virulence', color='red')
 ax2.set_ylabel('Coopérateurs', color='black')
 
-st.pyplot(fig1)
+if plot3 == "Yes":
+    st.pyplot(fig1)
