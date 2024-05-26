@@ -171,13 +171,12 @@ st.subheader("Dynamiques des 3 compartiments en fonction du temps")
 plot2 = st.selectbox("Display graphic ? :chart_with_upwards_trend:",("Yes","No"))
 
 temps = np.linspace(0,tmax,nbr_pas)
-sol = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = (B, c, k, mu, A, supinfec,sig,pay,p))
+sol = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = ( c, k,  A, supinfec,sig,pay))
 
 
-sol_sanscoop = odeint(model_sanscoop, y0 = [s0,i0 , c0], t=temps,args = (B, c, k, mu, A, supinfec,sig,pay))
+sol_sanscoop = odeint(model_sanscoop, y0 = [s0,i0 , c0], t=temps,args = (c, k, A, supinfec,sig,pay))
 
-#sol = better_ode( tmax , pas ,Y0 = [i0 , c0,x0],parms =[sig,rho0,rho1,pay,c,k,A,N])
-# (Y0, tmax, pas ,parms)
+
 
 temps = np.linspace(0,tmax,nbr_pas)
 
