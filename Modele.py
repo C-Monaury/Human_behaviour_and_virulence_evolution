@@ -115,7 +115,7 @@ if plot1=="Yes":
 
 
 
-def model(Y0, t ,B, c, k, mu, A, supinfec,sig,pay,p) :
+def model(Y0, t , c, k, A, supinfec,sig,pay) :
     #S, I , alpha, x = Y0
     S =Y0[0]
     I =Y0[1]
@@ -131,7 +131,7 @@ def model(Y0, t ,B, c, k, mu, A, supinfec,sig,pay,p) :
 
 
 
-def model_sanscoop(Y0, t ,B, c, k, mu, A, supinfec,sig,pay) :
+def model_sanscoop(Y0, t , c, k,  A, supinfec,sig,pay) :
     #S, I , alpha, x = Y0
     S =Y0[0]
     I =Y0[1]
@@ -169,9 +169,6 @@ with col23:
 st.subheader("Dynamiques des 3 compartiments en fonction du temps")
 
 plot2 = st.selectbox("Display graphic ? :chart_with_upwards_trend:",("Yes","No"))
-
-# sol = solve_ivp(model, y0 = [i0 , c0,x0], t_span = (0,tmax),args = (sig,rho0,rho1,pay,c,k,A,N),method="RK45",dense_output=True)
-# sol = sol.y
 
 temps = np.linspace(0,tmax,nbr_pas)
 sol = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = (B, c, k, mu, A, supinfec,sig,pay,p))
@@ -244,13 +241,12 @@ pay1 = st.slider("Rapport du payement des coopérateurs sur celui des défecteur
 pay2 = st.slider("Rapport du payement des coopérateurs sur celui des défecteurs2",min_value = 0.0, max_value = 1.0,step = 0.01)
 
 
-sol_coop = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = (B, c, k, mu, A, supinfec,sig,pay1,p))
-sol_coop2 = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = (B, c, k, mu, A, supinfec,sig,pay2,p))
+sol_coop = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = ( c, k,  A, supinfec,sig,pay1))
+sol_coop2 = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = ( c, k, A, supinfec,sig,pay2))
 
-sol_sanscoop = odeint(model_sanscoop, y0 = [s0,i0 , c0], t=temps,args = (B, c, k, mu, A, supinfec,sig,pay))
+sol_sanscoop = odeint(model_sanscoop, y0 = [s0,i0 , c0], t=temps,args = ( c, k, A, supinfec,sig,pay))
 
-#sol = better_ode( tmax , pas ,Y0 = [i0 , c0,x0],parms =[sig,rho0,rho1,pay,c,k,A,N])
-# (Y0, tmax, pas ,parms)
+
 
 temps = np.linspace(0,tmax,nbr_pas)
 
