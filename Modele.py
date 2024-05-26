@@ -16,10 +16,10 @@ st.header("Présentation du système:")
 st.latex(r'''
     \left  \{
     \begin{array}{r c l}
-        \frac{\d s}{\d \tau}  & =  1 - (1 -x)b(\upsilon) s  i -  s \,,\\
-        \frac{ \d i}{\d \tau}   & =  (1 -x)b(\upsilon) s i   - (\upsilon +1 ) i \,,\\
-        \frac{\d \upsilon}{\d \tau} &=  a \upsilon [(1 -x) b^{'}(\upsilon)(s + \sigma i) - 1] \,,\\
-        \frac{\d x}{\d  \tau}   & =  a x (1 -x) (i - \kappa) \,.
+        \frac{d s}{d \tau}  & =  1 - (1 -x)b(\upsilon) s  i -  s \,,\\
+        \frac{ d i}{d \tau}   & =  (1 -x)b(\upsilon) s i   - (\upsilon +1 ) i \,,\\
+        \frac{d \upsilon}{\d \tau} &=  a \upsilon [(1 -x) b^{'}(\upsilon)(s + \sigma i) - 1] \,,\\
+        \frac{d x}{d  \tau}   & =  a x (1 -x) (i - \kappa) \,.
    \end{array}
    \right.
              ''' 
@@ -36,9 +36,8 @@ with col1:
     
 
     st.write("Paramètres de vitesse")
-    sig =st.slider("Taux d'apprentissage",min_value = 0.0, max_value = 10.0,step = 0.1)
+    sig =st.slider("Taux d'apprentissage",min_value = 0.0, max_value = 1000.0,step = 0.1)
     supinfec = st.slider("supeinfection",min_value = 0.0, max_value = 1.0,step = 0.01)
-    p = st.slider("Paramètre forme effet virulence",min_value = 0.0, max_value = 1.0,step = 0.01)
     
     A=st.slider("Variance de la clairance",min_value = 0.1, max_value = 10.0,step = 0.1)
     
@@ -49,10 +48,7 @@ with col2:
     pay = st.slider("Rapport du payement des coopérateurs sur celui des défecteurs",min_value = 0.0, max_value = 1.0,step = 0.01)
     
     c = st.slider("Capacité d'infection constante",min_value = 0.0, max_value = 10.0,step = 0.1)
-    k= st.slider("Paramètre de forme",min_value = 0.10, max_value = 1.0,step = 0.01)
-    B = st.slider("Taux de natalité",min_value = 0.0, max_value = 10.0,step = 0.01)
-    mu = st.slider("RTaux de mortalit&",min_value = 0.0, max_value = 10.0,step = 0.01)
-
+    k= st.slider("Paramètre de forme",min_value = 0.10, max_value = 1.0,step = 0.0001)
 
 pas = 0.01
 nbr_pas = int(tmax/pas)
