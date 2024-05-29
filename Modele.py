@@ -37,7 +37,7 @@ col1, col2 = st.columns(2)
 with col1: 
 
     st.write("Shape parameters")
-    sig =st.slider("Sampling rate",min_value = 0.0, max_value = 1000.0,step = 0.1)
+    sig =st.slider("Sampling rate",min_value = 0.0, max_value = 10.0,step = 0.1)
     supinfec = st.slider("Superinfection",min_value = 0.0, max_value = 1.0,step = 0.01)
     
     A=st.slider("Variance in virulence",min_value = 0.1, max_value = 10.0,step = 0.1)
@@ -67,10 +67,10 @@ if trade_choix == "cx^k":
     def beta2(x,c, k ):
         return(c*k*x**(k-1))
     st.subheader("Trade-off:")
-    droite1 = np.zeros(200)
-    droite2 = np.zeros(200)
-    droite3 = np.zeros(200)
-    for y in range(200):
+    droite1 = np.zeros(2000)
+    droite2 = np.zeros(2000)
+    droite3 = np.zeros(2000)
+    for y in range(2000):
         droite1[y] = y/10
         droite2[y] = 1+y/10
         droite3[y]=beta(y,c,k)
@@ -88,17 +88,17 @@ if trade_choix == "(x*c)/(k+x)":
     def beta2(x,c, k ):
         return((c*k)/(k+x)**2)
     st.subheader("Forme du trade off")
-    droite1 = np.zeros(20)
-    droite2 = np.zeros(20)
-    droite3 = np.zeros(20)
-    for y in range(20):
+    droite1 = np.zeros(2000)
+    droite2 = np.zeros(2000)
+    droite3 = np.zeros(2000)
+    for y in range(2000):
         droite1[y] = y
         droite2[y] = y+1
         droite3[y]=beta(y,c,k)
     figtrade, ax1 = plt.subplots()
-    ax1.plot(range(20),droite1,"red")
-    ax1.plot(range(20),droite2,"black")
-    ax1.plot(range(20),droite3,"purple")
+    ax1.plot(range(2000),droite1,"red")
+    ax1.plot(range(2000),droite2,"black")
+    ax1.plot(range(2000),droite3,"purple")
     ax1.set_xlabel('Clairance')
     ax1.set_ylabel('Transmission')
 
