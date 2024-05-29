@@ -73,7 +73,7 @@ if trade_choix == "cx^k":
     for y in range(2000):
         droite1[y] = y/100
         droite2[y] = 1+y/100
-        droite3[y]=beta(y,c,k)
+        droite3[y]=beta(y/100,c,k)
     figtrade, ax1 = plt.subplots()
     ax1.plot(droite1,droite1,"red")
     ax1.plot(droite1,droite2,"black")
@@ -99,7 +99,7 @@ if trade_choix == "(x*c)/(k+x)":
     ax1.plot(droite1,droite1,"red")
     ax1.plot(droite1,droite2,"black")
     ax1.plot(droite1,droite3,"purple")
-    ax1.set_xlabel('Clairance')
+    ax1.set_xlabel('Virulence')
     ax1.set_ylabel('Transmission')
 
 if plot1=="Yes":
