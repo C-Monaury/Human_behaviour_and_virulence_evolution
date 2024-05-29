@@ -71,8 +71,8 @@ if trade_choix == "cx^k":
     droite2 = np.zeros(2000)
     droite3 = np.zeros(2000)
     for y in range(2000):
-        droite1[y] = y/10
-        droite2[y] = 1+y/10
+        droite1[y] = y/100
+        droite2[y] = 1+y/100
         droite3[y]=beta(y,c,k)
     figtrade, ax1 = plt.subplots()
     ax1.plot(droite1,droite1,"red")
@@ -92,8 +92,8 @@ if trade_choix == "(x*c)/(k+x)":
     droite2 = np.zeros(2000)
     droite3 = np.zeros(2000)
     for y in range(2000):
-        droite1[y] = y
-        droite2[y] = y+1
+        droite1[y] = y/100
+        droite2[y] = y/100 +1
         droite3[y]=beta(y,c,k)
     figtrade, ax1 = plt.subplots()
     ax1.plot(range(2000),droite1,"red")
