@@ -46,7 +46,7 @@ with col1:
 
 with col2: 
     st.write("Equilibrum parameters")
-    pay = st.slider("Ratio of cooperator payments to non-cooperators payments",min_value = 0.0, max_value = 1.0,step = 0.01)
+    pay = st.slider("Ratio of cooperators payments to non-cooperators payments",min_value = 0.0, max_value = 1.0,step = 0.01)
     
     c = st.slider("Constant infection capacity",min_value = 0.0, max_value = 10.0,step = 0.1)
     k= st.slider("Trade-off shape parameter",min_value = 0.10, max_value = 1.0,step = 0.0001)
@@ -108,13 +108,6 @@ if plot1=="Yes":
 
 ################################################# Coeur du modèle
 
-#Ancienne version non fonctionelle
-
-
-
-        
-
-
 
 def model(Y0, t , c, k, A, supinfec,sig,pay) :
     #S, I , alpha, x = Y0
@@ -154,22 +147,22 @@ def model_sanscoop(Y0, t , c, k,  A, supinfec,sig,pay) :
 
 #valeurs de départ
 
-st.write("Valeurs initiales")
+st.write("Initial values")
 col221,col21,col22,col23 = st.columns(4)
 with col221:
-    s0 = st.slider("Sains initiale",min_value = 0.0,max_value = 1.0, step = 0.01)
+    s0 = st.slider("Suceptible",min_value = 0.0,max_value = 1.0, step = 0.01)
 with col21:
-    i0 = st.slider("Infectés ",min_value = 0.0,max_value = 1.0, step = 0.01)
+    i0 = st.slider("Infected ",min_value = 0.0,max_value = 1.0, step = 0.01)
 with col22:
-    c0 = st.slider("Virulence initiale",0.0,10.0)
+    c0 = st.slider("Virulence",0.0,10.0)
 with col23:
-    x0 = st.slider("Coopérateurs",min_value = 0.01,max_value = 1.00, step = 0.01)
+    x0 = st.slider("Coopertators",min_value = 0.01,max_value = 1.00, step = 0.01)
 
 
 ###########################PLOT2D
 st.subheader("Dynamiques des 3 compartiments en fonction du temps")
 
-plot2 = st.selectbox("Display graphic ? :chart_with_upwards_trend:",("Yes","No"))
+plot2 = st.selectbox("Display times plots graphics ? :chart_with_upwards_trend:",("Yes","No"))
 
 temps = np.linspace(0,tmax,nbr_pas)
 sol = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = ( c, k,  A, supinfec,sig,pay))
@@ -189,9 +182,9 @@ ax1.plot(temps,sol[:,2],"purple")
 ax2.plot(temps,sol[:,3],"black")
 
 
-ax1.set_xlabel('Temps')
-ax1.set_ylabel('Prévalence', color='red')
-ax2.set_ylabel('Coopérateurs', color='black')
+ax1.set_xlabel('Times')
+ax1.set_ylabel('Density and virulence')
+ax2.set_ylabel('Cooperators', color='black')
 
 
 
@@ -205,20 +198,22 @@ ax1.plot(temps,sol_sanscoop[:,2],"purple")
 
 
 
-ax1.set_xlabel('Temps')
-ax1.set_ylabel('Prévalence', color='red')
-ax1.set_ylabel('Virulence', color='purple')
+
+ax1.set_xlabel('Times')
+ax1.set_ylabel('Density and virulence')
+ax2.set_ylabel('Cooperators', color='black')
+
 
 
 if plot2 == "Yes":
     row1, row2  =st.columns(2)
    
     with row1:
-        st.header("model coupling behavior and evolution")
+        st.subheader("model coupling behavior and evolution")
         st.pyplot(fig1)
 
     with row2:
-        st.header("model with only evolution ")
+        st.subheader("model with only evolution ")
         st.pyplot(fignocoop)
 
 
@@ -237,8 +232,8 @@ st.subheader("Virulence evolution")
 
 
 temps = np.linspace(0,tmax,nbr_pas)
-pay1 = st.slider("Rapport du payement des coopérateurs sur celui des défecteurs1",min_value = 0.0, max_value = 1.0,step = 0.01)
-pay2 = st.slider("Rapport du payement des coopérateurs sur celui des défecteurs2",min_value = 0.0, max_value = 1.0,step = 0.01)
+pay1 = st.slider("Ratio of cooperators payments to non-cooperators payments",min_value = 0.0, max_value = 1.0,step = 0.01)
+pay2 = st.slider("Ratio of cooperators payments to non-cooperators payments",min_value = 0.0, max_value = 1.0,step = 0.01)
 
 
 sol_coop = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = ( c, k,  A, supinfec,sig,pay1))
@@ -257,7 +252,7 @@ ax1.plot(temps,sol_sanscoop[:,2],"black")
 
 
 
-ax1.set_xlabel('Temps')
+ax1.set_xlabel('Times')
 ax1.set_ylabel('Virulence', color='red')
 ax2.set_ylabel('Coopérateurs', color='black')
 
