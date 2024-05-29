@@ -94,7 +94,7 @@ if trade_choix == "(x*c)/(k+x)":
     for y in range(2000):
         droite1[y] = y/100
         droite2[y] = y/100 +1
-        droite3[y]=beta(y,c,k)
+        droite3[y]=beta(y/100,c,k)
     figtrade, ax1 = plt.subplots()
     ax1.plot(droite1,droite1,"red")
     ax1.plot(droite1,droite2,"black")
