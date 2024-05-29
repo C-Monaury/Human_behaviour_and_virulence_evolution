@@ -31,7 +31,7 @@ st.header("Parameters")
 col1, col2 = st.columns(2)
 
  st.write("Time")
-    tmax = st.slider("Simulation time",1,1000)
+tmax = st.slider("Simulation time",1,1000)
 
 with col1: 
 
