@@ -232,8 +232,8 @@ st.subheader("Virulence evolution")
 
 
 temps = np.linspace(0,tmax,nbr_pas)
-pay1 = st.slider("Ratio of cooperators payments to non-cooperators payments",min_value = 0.0, max_value = 1.0,step = 0.01)
-pay2 = st.slider("Ratio of cooperators payments to non-cooperators payments",min_value = 0.0, max_value = 1.0,step = 0.01)
+pay1 = st.slider("Ratio of cooperators payments to non-cooperators payments 1",min_value = 0.0, max_value = 1.0,step = 0.01)
+pay2 = st.slider("Ratio of cooperators payments to non-cooperators payments 2",min_value = 0.0, max_value = 1.0,step = 0.01)
 
 
 sol_coop = odeint(model, y0 = [s0,i0 , c0,x0], t=temps,args = ( c, k,  A, supinfec,sig,pay1))
