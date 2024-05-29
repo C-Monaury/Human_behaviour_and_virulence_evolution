@@ -96,9 +96,9 @@ if trade_choix == "(x*c)/(k+x)":
         droite2[y] = y/100 +1
         droite3[y]=beta(y,c,k)
     figtrade, ax1 = plt.subplots()
-    ax1.plot(range(2000),droite1,"red")
-    ax1.plot(range(2000),droite2,"black")
-    ax1.plot(range(2000),droite3,"purple")
+    ax1.plot(droite1,droite1,"red")
+    ax1.plot(droite1,droite2,"black")
+    ax1.plot(droite1,droite3,"purple")
     ax1.set_xlabel('Clairance')
     ax1.set_ylabel('Transmission')
 
