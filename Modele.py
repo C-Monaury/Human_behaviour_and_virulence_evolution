@@ -9,9 +9,9 @@ import streamlit as st
 from mpl_toolkits.mplot3d import Axes3D
 
 
-st.title("Comment les comportements humain influencent-ils l’évolution de la virulence ?")
-st.write("Ce modèle a été réalisé au cours d'un stage de M2 par Clément MONAURY et encadré par Frédéric Hamelin")
-st.header("Présentation du système:")
+st.title("How does human behavior influence the evolution of virulence?")
+st.write("This model was produced during an M2 internship by Clément MONAURY and supervised by Frédéric Hamelin.")
+st.header("System overview:")
 
 st.latex(r'''
     \left  \{
@@ -27,28 +27,28 @@ st.latex(r'''
 
 
 
-st.header("Paramètres")
+st.header("Parameters")
 col1, col2 = st.columns(2)
-  
-with col1: 
-    st.write("Temps de simulation")
-    tmax = st.slider("Temps de simulation",1,1000)
-    
 
-    st.write("Paramètres de vitesse")
-    sig =st.slider("Taux d'apprentissage",min_value = 0.0, max_value = 1000.0,step = 0.1)
-    supinfec = st.slider("supeinfection",min_value = 0.0, max_value = 1.0,step = 0.01)
+ st.write("Time")
+    tmax = st.slider("Simulation time",1,1000)
+
+with col1: 
+
+    st.write("Shape parameters")
+    sig =st.slider("Sampling rate",min_value = 0.0, max_value = 1000.0,step = 0.1)
+    supinfec = st.slider("Superinfection",min_value = 0.0, max_value = 1.0,step = 0.01)
     
-    A=st.slider("Variance de la clairance",min_value = 0.1, max_value = 10.0,step = 0.1)
+    A=st.slider("Variance in virulence",min_value = 0.1, max_value = 10.0,step = 0.1)
     
 
 
 with col2: 
-    st.write("Paramètres d'intérets")
-    pay = st.slider("Rapport du payement des coopérateurs sur celui des défecteurs",min_value = 0.0, max_value = 1.0,step = 0.01)
+    st.write("Equilibrum parameters")
+    pay = st.slider("Ratio of cooperator payments to non-cooperators payments",min_value = 0.0, max_value = 1.0,step = 0.01)
     
-    c = st.slider("Capacité d'infection constante",min_value = 0.0, max_value = 10.0,step = 0.1)
-    k= st.slider("Paramètre de forme",min_value = 0.10, max_value = 1.0,step = 0.0001)
+    c = st.slider("Constant infection capacity",min_value = 0.0, max_value = 10.0,step = 0.1)
+    k= st.slider("Trade-off shape parameter",min_value = 0.10, max_value = 1.0,step = 0.0001)
 
 pas = 0.01
 nbr_pas = int(tmax/pas)
