@@ -19,7 +19,7 @@ st.latex(r'''
         \frac{d s}{d \tau}  & =  1 - (1 -x)b(\upsilon) s  i -  s \,,\\
         \frac{ d i}{d \tau}   & =  (1 -x)b(\upsilon) s i   - (\upsilon +1 ) i \,,\\
         \frac{d \upsilon}{\d \tau} &=  a \upsilon [(1 -x) b^{'}(\upsilon)(s + \sigma i) - 1] \,,\\
-        \frac{d x}{d  \tau}   & =  a x (1 -x) (i - \kappa) \,.
+        \frac{d x}{d  \tau}   & =  c x (1 -x) (i - \kappa) \,.
    \end{array}
    \right.
              ''' 
@@ -28,11 +28,12 @@ st.latex(r'''
 
 
 st.header("Parameters")
-col1, col2 = st.columns(2)
 
 st.write("Time")
 tmax = st.slider("Simulation time",1,1000)
 
+
+col1, col2 = st.columns(2)
 with col1: 
 
     st.write("Shape parameters")
@@ -59,13 +60,13 @@ plot1 = st.selectbox("Display trade-off graphic ? :chart_with_upwards_trend:",("
 
 
 
-trade_choix = st.selectbox("Choix du trade-off",["cx^k","(x*c)/(k+x)"])
+trade_choix = st.selectbox("Choose a trade-off relationship",["cx^k","(x*c)/(k+x)"])
 if trade_choix == "cx^k":
     def beta(x,c, k ):
         return(c*x**k)
     def beta2(x,c, k ):
         return(c*k*x**(k-1))
-    st.subheader("Forme du trade off")
+    st.subheader("Trade-off:")
     droite1 = np.zeros(200)
     droite2 = np.zeros(200)
     droite3 = np.zeros(200)
@@ -74,10 +75,10 @@ if trade_choix == "cx^k":
         droite2[y] = 1+y/10
         droite3[y]=beta(y,c,k)
     figtrade, ax1 = plt.subplots()
-    ax1.plot(range(200),droite1,"red")
-    ax1.plot(range(200),droite2,"black")
-    ax1.plot(range(200),droite3,"purple")
-    ax1.set_xlabel('Clairance')
+    ax1.plot(droite1,droite1,"red")
+    ax1.plot(droite1,droite2,"black")
+    ax1.plot(droite1,droite3,"purple")
+    ax1.set_xlabel('Virulence')
     ax1.set_ylabel('Transmission')
         
 
