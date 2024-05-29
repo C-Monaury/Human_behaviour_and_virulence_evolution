@@ -18,7 +18,7 @@ st.latex(r'''
     \begin{array}{r c l}
         \frac{d s}{d \tau}  & =  1 - (1 -x)b(\upsilon) s  i -  s \,,\\
         \frac{ d i}{d \tau}   & =  (1 -x)b(\upsilon) s i   - (\upsilon +1 ) i \,,\\
-        \frac{d \upsilon}{\d \tau} &=  a \upsilon [(1 -x) b^{'}(\upsilon)(s + \sigma i) - 1] \,,\\
+        \frac{d \upsilon}{d \tau} &=  a \upsilon [(1 -x) b^{'}(\upsilon)(s + \sigma i) - 1] \,,\\
         \frac{d x}{d  \tau}   & =  c x (1 -x) (i - \kappa) \,.
    \end{array}
    \right.
@@ -37,18 +37,18 @@ col1, col2 = st.columns(2)
 with col1: 
 
     st.write("Shape parameters")
-    sig =st.slider("Sampling rate",min_value = 0.0, max_value = 10.0,step = 0.1)
-    supinfec = st.slider("Superinfection",min_value = 0.0, max_value = 1.0,step = 0.01)
+    sig =st.slider("Sampling rate : c",min_value = 0.0, max_value = 10.0,step = 0.1)
+    supinfec = st.slider("Superinfection : sigma",min_value = 0.0, max_value = 1.0,step = 0.01)
     
-    A=st.slider("Variance in virulence",min_value = 0.1, max_value = 10.0,step = 0.1)
+    A=st.slider("Variance in virulence a",min_value = 0.1, max_value = 10.0,step = 0.1)
     
 
 
 with col2: 
     st.write("Equilibrum parameters")
-    pay = st.slider("Ratio of cooperators payments to non-cooperators payments",min_value = 0.0, max_value = 1.0,step = 0.01)
+    pay = st.slider("Ratio of cooperators payments to non-cooperators payments : kappa",min_value = 0.0, max_value = 1.0,step = 0.01)
     
-    c = st.slider("Constant infection capacity",min_value = 0.0, max_value = 10.0,step = 0.1)
+    c = st.slider("Trade-off : constant infection capacity ",min_value = 0.0, max_value = 10.0,step = 0.1)
     k= st.slider("Trade-off shape parameter",min_value = 0.10, max_value = 1.0,step = 0.0001)
 
 pas = 0.01
