@@ -150,11 +150,11 @@ def model_sanscoop(Y0, t , c, k,  A, supinfec,sig,pay) :
 st.write("Initial values")
 col221,col21,col22,col23 = st.columns(4)
 with col221:
-    s0 = st.slider("Suceptible",min_value = 0.0,max_value = 1.0, step = 0.01)
+    s0 = st.slider("Suceptible",min_value = 0.01,max_value = 1.0, step = 0.01)
 with col21:
-    i0 = st.slider("Infected ",min_value = 0.0,max_value = 1.0, step = 0.01)
+    i0 = st.slider("Infected ",min_value = 0.01,max_value = 1.0, step = 0.01)
 with col22:
-    c0 = st.slider("Virulence",0.0,10.0)
+    c0 = st.slider("Virulence",0.01,10.0)
 with col23:
     x0 = st.slider("Coopertators",min_value = 0.01,max_value = 1.00, step = 0.01)
 
