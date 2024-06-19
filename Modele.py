@@ -265,11 +265,15 @@ temps = np.linspace(0,tmax,nbr_pas)
 
 fig1, ax1 = plt.subplots()
 ax2 = ax1.twinx()
-ax1.plot(temps,sol[:,0],"green")
-ax1.plot(temps,sol[:,1],"red")
-ax1.plot(temps,sol[:,2],"purple")
-ax2.plot(temps,sol[:,3],"black")
+ax1.plot(temps,sol[:,0],"green",label="Susceptible")
+ax1.plot(temps,sol[:,1],"red",label="Infected")
+ax1.plot(temps,sol[:,2],"purple",label="Virulence")
+ax2.plot(temps,sol[:,3],"black",label="cooperators")
 
+lines, labels = ax1.get_legend_handles_labels()
+lines2, labels2 = ax2.get_legend_handles_labels()
+ax2.legend(lines + lines2, labels + labels2, loc=0)
+leg = ax2.legend(loc="upper right")
 
 ax1.set_xlabel('Times')
 ax1.set_ylabel('Density and virulence')
@@ -333,10 +337,10 @@ sol_sanscoop = odeint(model_sanscoop, y0 = [s0,i0 , c0], t=temps,args = ( c, k, 
 temps = np.linspace(0,tmax,nbr_pas)
 
 fig1, ax1 = plt.subplots()
-ax1.plot(temps,sol_coop[:,2],color="blue",legend="ratio of cost 1")
-ax1.plot(temps,sol_coop2[:,2],color = "blue",linestyle='dotted',legend="ratio of cost 1")
+ax1.plot(temps,sol_coop[:,2],color="blue",label="ratio of cost 1")
+ax1.plot(temps,sol_coop2[:,2],color = "blue",linestyle='dotted',label="ratio of cost 1")
 ax1.plot(temps,sol_sanscoop[:,2],"black")
-ax1.legend("upper right")
+ax1.legend(loc="upper right")
 
 
 ax1.set_xlabel('Times')
