@@ -272,8 +272,8 @@ ax2.plot(temps,sol[:,3],"black",label="cooperators")
 
 lines, labels = ax1.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
-ax2.legend(lines + lines2, labels + labels2, loc=0)
-leg = ax2.legend(loc="upper right")
+ax2.legend(lines + lines2, labels + labels2, loc="upper right",fontsize=9)
+
 
 ax1.set_xlabel('Times')
 ax1.set_ylabel('Density and virulence')
