@@ -25,31 +25,92 @@ st.latex(r'''
              ''' 
 )
 
-
+user = st.selectbox(
+    "Parameters modification ",
+    ("Simple" , "Acess to all parameters"))
 
 st.header("Parameters")
 
 st.write("Time")
-tmax = st.slider("Simulation time",1,1000)
+if user=="Simple":
+    tmax=100
+else:
+    tmax = st.slider("Simulation time",1,1000)
 
 
-col1, col2 = st.columns(2)
-with col1: 
 
-    st.write("Shape parameters")
-    sig =st.slider("Sampling rate : c",min_value = 0.0, max_value = 10.0,step = 0.1)
-    supinfec = st.slider("Superinfection : sigma",min_value = 0.0, max_value = 1.0,step = 0.01)
-    
-    A=st.slider("Variance in virulence a",min_value = 0.1, max_value = 10.0,step = 0.1)
-    
+if user=="Acess to all parameters":
+    col1, col2 = st.columns(2)
+    with col1: 
+
+        st.write("Shape parameters")
+        sig =st.slider("Sampling rate : c",min_value = 0.0, max_value = 10.0,step = 0.1)
+        supinfec = st.slider("Superinfection : sigma",min_value = 0.0, max_value = 1.0,step = 0.01)
+        
+        A=st.slider("Variance in virulence a",min_value = 0.1, max_value = 10.0,step = 0.1)
+        
 
 
-with col2: 
-    st.write("Equilibrum parameters")
-    pay = st.slider("Ratio of cooperators payments to non-cooperators payments : kappa",min_value = 0.0, max_value = 1.0,step = 0.01)
-    
-    c = st.slider("Trade-off : constant infection capacity ",min_value = 0.0, max_value = 10.0,step = 0.1)
-    k= st.slider("Trade-off shape parameter",min_value = 0.10, max_value = 1.0,step = 0.0001)
+    with col2: 
+        st.write("Equilibrum parameters")
+        pay = st.slider("Ratio of cooperators payments to non-cooperators payments : kappa",min_value = 0.0, max_value = 1.0,step = 0.01)
+        
+        c = st.slider("Trade-off : constant infection capacity ",min_value = 0.0, max_value = 10.0,step = 0.1)
+        k= st.slider("Trade-off shape parameter",min_value = 0.10, max_value = 1.0,step = 0.0001)
+
+
+
+
+
+
+if user=="Simple":
+    col1, col2 = st.columns(2)
+    with col1: 
+        st.write("Shape parameters")
+        vitesse=st.selectbox("Ratio of virulence to learning rate of human",("Virulence evolution 10 times faster than human behaviour","Same speed","Human behaviour 10 times faster than pathogen"))
+        if vitesse =="Virulence evolution 10 times faster than human behaviour":
+            A = 10
+            sig = 1
+        if vitesse =="Same speed":
+            A = 5
+            sig = 5  
+        if vitesse =="Human behaviour 10 times faster than pathogen":
+            A = 1
+            sig = 10   
+
+        supinfec1 = st.number_input("Superinfection probability ",min_value = 0.0, max_value = 100.0,step = 1.0,value=10.0)
+        supinfec = supinfec1/100
+        
+
+        
+
+
+    with col2: 
+        st.write("Equilibrum parameters")
+        
+        payement=st.selectbox("Ratio of cooperators payments to non-cooperators payments",("Low payout ratio (cooperators equilibrium)","Strong payout ratio"))
+        if payement =="Low payout ratio (cooperators equilibrium)":
+            pay = 0.05
+        if payement =="Strong payout ratio":
+            pay = 0.8        
+        
+        
+        
+        
+        tradouf= st.selectbox("Choose a trade-off",("Strong (endemic equilibrium)","Medium (Disease free equilibrium with virulence)","Weak (Disease free equilibrium without virulence)"))
+        if tradouf =="Strong (endemic equilibrium)":
+            c=3.5
+            k=0.5
+        if tradouf =="Medium (Disease free equilibrium with virulence)":
+            c=1.5
+            k=0.7
+        if tradouf =="Weak (Disease free equilibrium without virulence)":
+            c=.5
+            k=0.9
+        
+ 
+
+
 
 pas = 0.01
 nbr_pas = int(tmax/pas)
@@ -59,14 +120,12 @@ nbr_pas = int(tmax/pas)
 plot1 = st.selectbox("Display trade-off graphic ? :chart_with_upwards_trend:",("Yes","No"))
 
 
-
-trade_choix = st.selectbox("Choose a trade-off relationship",["cx^k","(x*c)/(k+x)"])
-if trade_choix == "cx^k":
+if user=="Simple":
     def beta(x,c, k ):
         return(c*x**k)
     def beta2(x,c, k ):
         return(c*k*x**(k-1))
-    st.subheader("Trade-off:")
+   
     droite1 = np.zeros(2000)
     droite2 = np.zeros(2000)
     droite3 = np.zeros(2000)
@@ -80,29 +139,56 @@ if trade_choix == "cx^k":
     ax1.plot(droite1,droite3,"purple")
     ax1.set_xlabel('Virulence')
     ax1.set_ylabel('Transmission')
+            
+
+else:
+    trade_choix = st.selectbox("Choose a trade-off relationship",["cx^k","(x*c)/(k+x)"])
+    if trade_choix == "cx^k":
+        def beta(x,c, k ):
+            return(c*x**k)
+        def beta2(x,c, k ):
+            return(c*k*x**(k-1))
+
+        droite1 = np.zeros(2000)
+        droite2 = np.zeros(2000)
+        droite3 = np.zeros(2000)
+        for y in range(2000):
+            droite1[y] = y/100
+            droite2[y] = 1+y/100
+            droite3[y]=beta(y/100,c,k)
+        figtrade, ax1 = plt.subplots()
+        ax1.plot(droite1,droite1,"red")
+        ax1.plot(droite1,droite2,"black")
+        ax1.plot(droite1,droite3,"purple")
+        ax1.set_xlabel('Virulence')
+        ax1.set_ylabel('Transmission')
+            
+
+    if trade_choix == "(x*c)/(k+x)":
+        def beta(x,c, k ):
+            return((x*c)/(k+x))
+        def beta2(x,c, k ):
+            return((c*k)/(k+x)**2)
+
+        droite1 = np.zeros(2000)
+        droite2 = np.zeros(2000)
+        droite3 = np.zeros(2000)
+        for y in range(2000):
+            droite1[y] = y/100
+            droite2[y] = y/100 +1
+            droite3[y]=beta(y/100,c,k)
+        figtrade, ax1 = plt.subplots()
+        ax1.plot(droite1,droite1,"red")
+        ax1.plot(droite1,droite2,"black")
+        ax1.plot(droite1,droite3,"purple")
+        ax1.set_xlabel('Virulence')
+        ax1.set_ylabel('Transmission')        
+        
+        
         
 
-if trade_choix == "(x*c)/(k+x)":
-    def beta(x,c, k ):
-        return((x*c)/(k+x))
-    def beta2(x,c, k ):
-        return((c*k)/(k+x)**2)
-    st.subheader("Forme du trade off")
-    droite1 = np.zeros(2000)
-    droite2 = np.zeros(2000)
-    droite3 = np.zeros(2000)
-    for y in range(2000):
-        droite1[y] = y/100
-        droite2[y] = y/100 +1
-        droite3[y]=beta(y/100,c,k)
-    figtrade, ax1 = plt.subplots()
-    ax1.plot(droite1,droite1,"red")
-    ax1.plot(droite1,droite2,"black")
-    ax1.plot(droite1,droite3,"purple")
-    ax1.set_xlabel('Virulence')
-    ax1.set_ylabel('Transmission')
-
 if plot1=="Yes":
+    st.subheader("Trade-off:")
     st.pyplot(figtrade)
 
 
@@ -146,17 +232,20 @@ def model_sanscoop(Y0, t , c, k,  A, supinfec,sig,pay) :
 
 
 #valeurs de départ
-
-st.write("Initial values")
-col221,col21,col22,col23 = st.columns(4)
-with col221:
-    s0 = st.slider("Suceptible",min_value = 0.01,max_value = 1.0, step = 0.01)
-with col21:
-    i0 = st.slider("Infected ",min_value = 0.01,max_value = 1.0, step = 0.01)
-with col22:
-    c0 = st.slider("Virulence",0.01,10.0)
-with col23:
-    x0 = st.slider("Coopertators",min_value = 0.01,max_value = 1.00, step = 0.01)
+if user=="Simple":
+    s0,i0,c0,x0=0.9,0.1,0.5,0.5
+    
+else:    
+    st.write("Initial values")
+    col221,col21,col22,col23 = st.columns(4)
+    with col221:
+        s0 = st.slider("Suceptible",min_value = 0.01,max_value = 1.0, step = 0.01)
+    with col21:
+        i0 = st.slider("Infected ",min_value = 0.01,max_value = 1.0, step = 0.01)
+    with col22:
+        c0 = st.slider("Virulence",0.01,10.0)
+    with col23:
+        x0 = st.slider("Coopertators",min_value = 0.01,max_value = 1.00, step = 0.01)
 
 
 ###########################PLOT2D
@@ -206,15 +295,13 @@ ax2.set_ylabel('Cooperators', color='black')
 
 
 if plot2 == "Yes":
-    row1, row2  =st.columns(2)
-   
-    with row1:
-        st.subheader("model coupling behavior and evolution")
-        st.pyplot(fig1)
 
-    with row2:
-        st.subheader("model with only evolution ")
-        st.pyplot(fignocoop)
+    st.subheader("model coupling behavior and evolution")
+    st.pyplot(fig1)
+
+
+    st.subheader("model with only evolution ")
+    st.pyplot(fignocoop)
 
 
 
@@ -225,10 +312,10 @@ if plot2 == "Yes":
 
 ############################## PLOT 
 
-plot3 = st.selectbox("Display virulence evolution ? :chart_with_upwards_trend:",("Yes","No"))
 
 
 st.subheader("Virulence evolution")
+plot3 = st.selectbox("Display virulence evolution ? :chart_with_upwards_trend:",("Yes","No"))
 
 
 temps = np.linspace(0,tmax,nbr_pas)
